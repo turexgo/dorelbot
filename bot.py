@@ -43,7 +43,7 @@ SYSTEM_INSTRUCTION = (
 
 generation_config = {"temperature": 0.7}
 model = genai.GenerativeModel(
-    model_name='gemini-pro',
+    model_name='gemini-3.7-flash',
     generation_config=generation_config,
     system_instruction=SYSTEM_INSTRUCTION
 )
