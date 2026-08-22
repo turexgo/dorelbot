@@ -107,9 +107,9 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
         response = chat_session.send_message(context_prompt)
         bot_reply = response.text
 
-        except Exception as e:
-            bot_reply = f"EROARE DETALIATĂ: {str(e)}"
-            print(f"Eroare AI/DB: {e}")
+    except Exception as e:
+        bot_reply = f"EROARE DETALIATĂ: {str(e)}"
+        print(f"Eroare AI/DB: {e}")
 
 
     await update.message.reply_text(bot_reply)
