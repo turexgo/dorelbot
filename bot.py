@@ -125,7 +125,7 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
         # Apelăm modelul dorit pe Groq (llama2-7b-chat)
         response = groq_client.chat.completions.create(
-            model="llama2-7b-chat",
+            model="openai/gpt-oss-120b",
             messages=chat_histories[chat_id],
             temperature=0.7,
             max_tokens=150
