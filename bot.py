@@ -128,8 +128,36 @@ async def handle_message(update: Update, context: ContextTypes.DEFAULT_TYPE):
             model="openai/gpt-oss-120b",
             messages=chat_histories[chat_id],
             temperature=0.7,
-            max_tokens=150
+            max_tokens=150,
         )
+
+        # Extragem textul și ne asigurăm că nu e gol
+        if (
+            response.choices
+            and response.choices[0].message
+            and response.choices[0].message.content
+        ):
+          bot_reply = response.choices[0].message.content
+        else:
+          bot_reply = "Bă, m-am blocat la fază și n-am știut ce să zic!"
+
+        chat_histories[chat_id].append(
+            {"role": "assistant", "content": bot_reply}
+        )
+
+    except Exception as e:
+      if "429" in str(e):
+        bot_reply = "Bă, m-ați asaltat cu mesaje pe Groq și m-ați blocat!"
+      else:
+        bot_reply = f"EROARE DETALIATĂ: {str(e)}"
+      print(f"Eroare AI/DB: {e}")
+
+    # Verificare suplimentară de siguranță înainte de trimitere
+    if bot_reply and bot_reply.strip():
+      await update.message.reply_text(bot_reply)
+    else:
+      await update.message.reply_text("Stai așa că n-am înțeles nimic.")
+
 
         bot_reply = response.choices[0].message.content
         
